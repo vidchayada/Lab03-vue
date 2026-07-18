@@ -9,6 +9,8 @@ const apiClient = axios.create({
   },
 })
 
+export { apiClient }
+
 export default {
   getUsers() {
     return apiClient.get('/users')
