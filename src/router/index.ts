@@ -5,6 +5,7 @@ import UserProfileView from '../views/user/ProfileView.vue'
 import UserPostsView from '../views/user/PostsView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 import UserEditView from '@/views/user/EditView.vue'
+import nProgress from 'nprogress'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -54,6 +55,14 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
   ],
+})
+
+router.beforeEach(() => {
+  nProgress.start()
+})
+
+router.afterEach(() => {
+  nProgress.done()
 })
 
 export default router
