@@ -13,7 +13,7 @@ const { message } = storeToRefs(store)
   </div>
   <header>
     <nav>
-      <RouterLink :to="{ name: 'home-view' }">Home</RouterLink>
+      <RouterLink :to="{ name: 'user-list-view' }">Home</RouterLink>
     </nav>
   </header>
 

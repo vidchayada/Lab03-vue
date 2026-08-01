@@ -14,7 +14,7 @@ const updateUser = () => {
   setTimeout(() => {
     messageStore.resetMessage()
   }, 3000)
-  router.push({ name: 'home-view' })
+  router.push({ name: 'user-list-view' })
 }
 </script>
 

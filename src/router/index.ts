@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import UserLayoutView from '../views/user/LayoutView.vue'
 import UserProfileView from '../views/user/ProfileView.vue'
 import UserPostsView from '../views/user/PostsView.vue'
@@ -8,14 +7,18 @@ import UserEditView from '@/views/user/EditView.vue'
 import nProgress from 'nprogress'
 import UserService from '@/services/UserService'
 import { useUserStore } from '@/stores/user'
+import UserListView from '@/views/UserListView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home-view',
-      component: HomeView,
+      name: 'user-list-view',
+      component: UserListView,
+      props: (route) => ({
+        page: parseInt(route.query.page?.toString() || '1'),
+      }),
     },
     {
       path: '/user/:id',
@@ -77,6 +80,13 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  },
 })
 
 router.beforeEach(() => {
