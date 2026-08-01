@@ -24,3 +24,6 @@ export interface Post {
 export interface UserState {
   user: User | null
 }
+export interface MessageState {
+  message: string
+}
