@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { toRefs } from 'vue'
 import { useRouter } from 'vue-router'
-import type { User } from '@/types'
+import { useUserStore } from '@/stores/user'
 import { useMessageStore } from '@/stores/message'
+import { storeToRefs } from 'pinia'
 
 const router = useRouter()
+const userStore = useUserStore()
 const messageStore = useMessageStore()
-const props = defineProps<{
-  user: User
-}>()
+const { user } = storeToRefs(userStore)
 
-const { user } = toRefs(props)
 const updateUser = () => {
   messageStore.updateMessage('Update is in progress...')
   setTimeout(() => {

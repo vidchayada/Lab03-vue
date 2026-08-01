@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import { toRefs } from 'vue'
-import { type User } from '@/types'
+import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
 
-const props = defineProps<{
-  user: User
-}>()
-const { user } = toRefs(props)
+const store = useUserStore()
+const { user } = storeToRefs(store)
 </script>
 
 <template>
-  <div>
+  <div v-if="user">
     <h3>Contact</h3>
     <p>Phone: {{ user.phone }}</p>
     <p>Email: {{ user.email }}</p>

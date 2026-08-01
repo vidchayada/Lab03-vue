@@ -1,37 +1,9 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { type User } from '@/types'
-import UserService from '@/services/UserService'
-import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
 
-const user = ref<User | null>(null)
-const router = useRouter()
-const props = defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-})
-
-onMounted(() => {
-  UserService.getUser(Number(props.id))
-    .then((response) => {
-      if (!response.data || Object.keys(response.data).length === 0) {
-        router.push({
-          name: '404-resource-view',
-          params: { resource: 'user' },
-        })
-        return
-      }
-      user.value = response.data
-    })
-    .catch(() => {
-      router.push({
-        name: '404-resource-view',
-        params: { resource: 'user' },
-      })
-    })
-})
+const store = useUserStore()
+const { user } = storeToRefs(store)
 </script>
 
 <template>

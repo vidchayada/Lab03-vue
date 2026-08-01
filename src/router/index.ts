@@ -6,6 +6,8 @@ import UserPostsView from '../views/user/PostsView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 import UserEditView from '@/views/user/EditView.vue'
 import nProgress from 'nprogress'
+import UserService from '@/services/UserService'
+import { useUserStore } from '@/stores/user'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +22,26 @@ const router = createRouter({
       name: 'user-layout-view',
       component: UserLayoutView,
       props: true,
+      beforeEnter: (to) => {
+        const id = parseInt(to.params.id as string)
+        const userStore = useUserStore()
+        return UserService.getUser(id)
+          .then((response) => {
+            if (!response.data || Object.keys(response.data).length === 0) {
+              return {
+                name: '404-resource-view',
+                params: { resource: 'user' },
+              }
+            }
+            userStore.setUser(response.data)
+          })
+          .catch(() => {
+            return {
+              name: '404-resource-view',
+              params: { resource: 'user' },
+            }
+          })
+      },
       children: [
         {
           path: '',

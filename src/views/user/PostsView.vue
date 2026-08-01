@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { ref, toRefs, watchEffect } from 'vue'
-import { type User, type Post } from '@/types'
+import { ref, watchEffect } from 'vue'
+import { type Post } from '@/types'
 import { apiClient } from '@/services/UserService'
+import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
 
-const props = defineProps<{
-  user: User
-}>()
-const { user } = toRefs(props)
+const store = useUserStore()
+const { user } = storeToRefs(store)
 
 const posts = ref<Post[]>([])
 
 watchEffect(() => {
+  if (!user.value) return
   apiClient
     .get('/posts?userId=' + user.value.id)
     .then((response) => {
